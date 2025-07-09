@@ -1,1 +1,68 @@
-/* Estilo com fontes, cores e fundo temático */
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chá da Catarina</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="libs/aos/aos.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+  <!-- Fundo decorativo -->
+  <div class="fundo-decorativo"></div>
+
+  <!-- Menu de navegação -->
+  <header class="topo">
+    <nav class="menu">
+      <ul>
+        <li><a href="index.html">Início</a></li>
+        <li><a href="confirmacao.html">Confirmação</a></li>
+        <li><a href="lista-presentes.html">Presentes</a></li>
+        <li><a href="fotos.html">Fotos</a></li>
+        <li><a href="recados.html">Recados</a></li>
+        <li><a href="info.html">Informações</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Frase -->
+  <section class="frase-topo" data-aos="fade-down">
+    <h1>Sempre e pra sempre <span class="destaque">C. A&amp;A</span></h1>
+  </section>
+
+  <!-- Boas-vindas -->
+  <main class="conteudo-central" data-aos="fade-up">
+    <h2>Bem-vindo ao Chá da Catarina! 🍼</h2>
+    <p>Fique à vontade para navegar e participar desse momento tão especial conosco!</p>
+
+    <div class="botoes-inicio">
+      <a href="confirmacao.html" class="botao">Confirme sua Presença</a>
+      <a href="lista-presentes.html" class="botao">Escolha um Presente</a>
+    </div>
+  </main>
+
+  <!-- Som de fundo -->
+  <audio id="audioFundo" loop>
+    <source src="assets/audio/batimentos.mp3" type="audio/mp3" />
+    Seu navegador não suporta áudio embutido.
+  </audio>
+  <div class="audio-controle">
+    <button onclick="toggleAudio()">🔊 Som</button>
+  </div>
+
+  <script src="libs/aos/aos.js"></script>
+  <script>
+    AOS.init();
+
+    function toggleAudio() {
+      const audio = document.getElementById("audioFundo");
+      if (audio.paused) {
+        audio.play();
+      } else {
+        audio.pause();
+      }
+    }
+  </script>
+</body>
+</html>
