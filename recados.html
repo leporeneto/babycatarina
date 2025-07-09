@@ -1,90 +1,45 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mural de Recados – Chá da Catarina</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="libs/aos/aos.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
-  <style>
-    .recado {
-      background: #fff;
-      border-left: 5px solid #EF7C7C;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-    }
-  </style>
-</head>
-<body>
-  <header class="topo">
-    <nav class="menu">
-      <ul>
-        <li><a href="index.html">Início</a></li>
-        <li><a href="confirmacao.html">Confirmação</a></li>
-        <li><a href="lista-presentes.html">Presentes</a></li>
-        <li><a href="fotos.html">Fotos</a></li>
-        <li><a href="recados.html">Recados</a></li>
-        <li><a href="info.html">Informações</a></li>
-      </ul>
-    </nav>
-  </header>
+<script>
+  const RECADOS_URL = "https://script.google.com/macros/s/AKfycbxn3LAcvUlGiKBwdAf9rsXq9rDVQQWK_6WVDW3cGFvuA9M7J-2MVykv0tg8hNn9fdTzUA/exec";
+  const form = document.getElementById("formRecado");
+  const lista = document.getElementById("listaRecados");
 
-  <main class="conteudo-central" data-aos="fade-up">
-    <h2>Deixe seu recado 💌</h2>
+  function carregarRecados() {
+    fetch(RECADOS_URL)
+      .then(r => r.json())
+      .then(recados => {
+        lista.innerHTML = recados.reverse().map(r => `
+          <div class="recado" data-aos="fade-up">
+            <p><strong>${r.nome}</strong> escreveu em ${r.data}:</p>
+            <p>${r.texto}</p>
+          </div>
+        `).join("");
+      })
+      .catch(() => {
+        lista.innerHTML = "<p>Erro ao carregar recados.</p>";
+      });
+  }
 
-    <form id="formRecado">
-      <label for="nome">Seu nome:</label><br />
-      <input type="text" id="nome" required /><br /><br />
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const nome = document.getElementById("nome").value.trim();
+    const texto = document.getElementById("mensagem").value.trim();
+    if (!nome || !texto) return;
 
-      <label for="mensagem">Mensagem:</label><br />
-      <textarea id="mensagem" rows="4" required></textarea><br /><br />
+    const payload = { nome, texto };
 
-      <button type="submit" class="botao">Enviar recado</button>
-    </form>
-
-    <div id="listaRecados" style="margin-top: 2rem;"></div>
-  </main>
-
-  <script src="libs/aos/aos.js"></script>
-  <script>
-    AOS.init();
-  </script>
-  <script>
-    const form = document.getElementById("formRecado");
-    const lista = document.getElementById("listaRecados");
-
-    function salvarRecado(nome, texto) {
-      const recados = JSON.parse(localStorage.getItem("recadosCatarina") || "[]");
-      recados.push({ nome, texto, data: new Date().toLocaleString() });
-      localStorage.setItem("recadosCatarina", JSON.stringify(recados));
-    }
-
-    function carregarRecados() {
-      const recados = JSON.parse(localStorage.getItem("recadosCatarina") || "[]");
-      lista.innerHTML = recados.reverse().map(r => `
-        <div class="recado" data-aos="fade-up">
-          <p><strong>${r.nome}</strong> escreveu em ${r.data}:</p>
-          <p>${r.texto}</p>
-        </div>
-      `).join("");
-    }
-
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const nome = document.getElementById("nome").value.trim();
-      const texto = document.getElementById("mensagem").value.trim();
-      if (!nome || !texto) return;
-
-      salvarRecado(nome, texto);
+    fetch(RECADOS_URL, {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: { "Content-Type": "application/json" }
+    })
+    .then(() => {
       form.reset();
       carregarRecados();
+    })
+    .catch(() => {
+      alert("Erro ao enviar recado.");
     });
+  });
 
-    // Carregar ao abrir a página
-    carregarRecados();
-  </script>
-</body>
-</html>
+  carregarRecados();
+</script>
