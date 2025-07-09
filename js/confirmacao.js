@@ -1,0 +1,1 @@
+// Lógica de envio de confirmação
