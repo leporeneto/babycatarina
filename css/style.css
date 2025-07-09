@@ -1,68 +1,161 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chá da Catarina</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="stylesheet" href="libs/aos/aos.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
-</head>
-<body>
-  <!-- Fundo decorativo -->
-  <div class="fundo-decorativo"></div>
+/* Reset e estrutura básica */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-  <!-- Menu de navegação -->
-  <header class="topo">
-    <nav class="menu">
-      <ul>
-        <li><a href="index.html">Início</a></li>
-        <li><a href="confirmacao.html">Confirmação</a></li>
-        <li><a href="lista-presentes.html">Presentes</a></li>
-        <li><a href="fotos.html">Fotos</a></li>
-        <li><a href="recados.html">Recados</a></li>
-        <li><a href="info.html">Informações</a></li>
-      </ul>
-    </nav>
-  </header>
+body {
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  background-image: url("../img/layout/bg-home.jpg");
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  position: relative;
+}
 
-  <!-- Frase -->
-  <section class="frase-topo" data-aos="fade-down">
-    <h1>Sempre e pra sempre <span class="destaque">C. A&amp;A</span></h1>
-  </section>
+/* Camada branca translúcida p/ facilitar leitura */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: -1;
+}
 
-  <!-- Boas-vindas -->
-  <main class="conteudo-central" data-aos="fade-up">
-    <h2>Bem-vindo ao Chá da Catarina! 🍼</h2>
-    <p>Fique à vontade para navegar e participar desse momento tão especial conosco!</p>
+/* Títulos e destaques */
+h1, h2, h3 {
+  font-family: 'Lilita One', cursive;
+  color: #EF7C7C;
+  margin-bottom: 1rem;
+  text-align: center;
+}
 
-    <div class="botoes-inicio">
-      <a href="confirmacao.html" class="botao">Confirme sua Presença</a>
-      <a href="lista-presentes.html" class="botao">Escolha um Presente</a>
-    </div>
-  </main>
+h2 {
+  font-size: 2rem;
+  margin-top: 2rem;
+}
 
-  <!-- Som de fundo -->
-  <audio id="audioFundo" loop>
-    <source src="assets/audio/batimentos.mp3" type="audio/mp3" />
-    Seu navegador não suporta áudio embutido.
-  </audio>
-  <div class="audio-controle">
-    <button onclick="toggleAudio()">🔊 Som</button>
-  </div>
+/* Menu superior */
+header.topo {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+  padding: 1rem 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
 
-  <script src="libs/aos/aos.js"></script>
-  <script>
-    AOS.init();
+.menu ul {
+  display: flex;
+  justify-content: center;
+  list-style: none;
+  padding: 0;
+}
 
-    function toggleAudio() {
-      const audio = document.getElementById("audioFundo");
-      if (audio.paused) {
-        audio.play();
-      } else {
-        audio.pause();
-      }
-    }
-  </script>
-</body>
-</html>
+.menu li {
+  margin: 0 15px;
+}
+
+.menu a {
+  font-family: 'Lilita One', cursive;
+  color: #EF7C7C;
+  font-size: 1.1rem;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.menu a:hover {
+  color: #F5B0B0;
+}
+
+/* Área central de conteúdo */
+main.conteudo-central {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 1rem 2rem;
+  background-color: rgba(255,255,255,0.9);
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+}
+
+/* Formulários */
+form input,
+form textarea,
+form select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 1rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+form textarea {
+  resize: vertical;
+}
+
+/* Botões */
+button, .botao {
+  background-color: #EF7C7C;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-family: 'Poppins', sans-serif;
+}
+
+button:hover, .botao:hover {
+  background-color: #fca6a6;
+}
+
+/* Galeria de fotos */
+.foto-galeria {
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  transition: transform 0.3s;
+}
+
+.foto-galeria:hover {
+  transform: scale(1.03);
+  cursor: pointer;
+}
+
+/* Recados */
+.recado {
+  background: #fff;
+  border-left: 5px solid #EF7C7C;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+/* Rodapé */
+footer {
+  text-align: center;
+  padding: 1rem;
+  margin-top: 3rem;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+/* Responsivo */
+@media screen and (max-width: 768px) {
+  .menu ul {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  main.conteudo-central {
+    padding: 1rem;
+  }
+}
