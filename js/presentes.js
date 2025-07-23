@@ -30,8 +30,7 @@ form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   const nome = document.getElementById("nome").value.trim();
-  const contato = document.getElementById("contato").value.trim();
-  if (!nome || !contato) return alert("Por favor, preencha nome e contato.");
+  if (!nome) return alert("Por favor, preencha seu nome.");
 
   const fraldasSelecionadas = fraldas.map(fralda => {
     const qtd = parseInt(document.getElementById(`fralda-${fralda.tamanho}`).value || 0);
@@ -44,14 +43,16 @@ form.addEventListener("submit", (e) => {
 
   const payload = {
     nome,
-    contato,
     fraldas: fraldasSelecionadas.join(', ')
   };
 
+  const formData = new FormData();
+  formData.append("nome", payload.nome);
+  formData.append("fraldas", payload.fraldas);
+
   fetch(PLANILHA_PRESENTES_URL, {
     method: "POST",
-    body: JSON.stringify(payload),
-    headers: { "Content-Type": "application/json" }
+    body: formData
   })
   .then(() => {
     mensagem.innerHTML = `
