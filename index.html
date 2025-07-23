@@ -2,20 +2,19 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Chá de Bebê da Catarina</title>
   <link rel="stylesheet" href="css/style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="libs/aos/aos.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
 </head>
 <body>
-  <header>
-    <nav class="top-menu">
+  <header class="topo">
+    <nav class="menu">
       <ul>
         <li><a href="index.html">Início</a></li>
         <li><a href="confirmacao.html">Confirmação</a></li>
-        <li><a href="presentes.html">Presentes</a></li>
+        <li><a href="lista-presentes.html">Presentes</a></li>
         <li><a href="fotos.html">Fotos</a></li>
         <li><a href="recados.html">Recados</a></li>
         <li><a href="info.html">Informações</a></li>
@@ -23,40 +22,41 @@
     </nav>
   </header>
 
-  <main>
-    <section class="hero">
-      <h1 class="frase">Sempre e pra sempre C. A&amp;A</h1>
-      <p class="boasvindas">Bem-vindo ao site do chá de bebê da nossa princesinha Catarina!<br>
-      Aqui você encontra tudo sobre o grande dia: confirmação de presença, lista de fraldas, mural de fotos e recadinhos.</p>
+  <main class="conteudo-central" data-aos="fade-up">
+    <h2>Sempre e pra sempre C. A&A</h2>
 
-      <div class="imagem-central">
-        <img src="img/capa-mermaid.png" alt="Imagem da sereia Catarina" />
-      </div>
+    <p style="text-align:center; font-size: 1.2rem; margin-bottom: 2rem;">
+      Bem-vindo ao site do chá de bebê da nossa princesinha Catarina!<br>
+      Aqui você encontra tudo sobre o grande dia: confirmação de presença, lista de fraldas, mural de fotos e recadinhos.
+    </p>
 
-      <h2 class="slogan">Chá de Bebê da <span class="destaque">Catarina</span></h2>
-      <p class="convite">Bem-vindo ao Chá da Catarina! 🐚<br>Fique à vontade para navegar e participar desse momento tão especial conosco!</p>
+    <div style="text-align:center;">
+      <img src="assets/img/layout/bg-home.png" alt="Ilustração do site" style="max-width: 100%; border-radius: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);" />
+   
+    </div>
+    <div style="text-align: center; margin-top: 30px;">
+  <a href="confirmacao.html" style="text-decoration: none;">
+    <button style="background-color: #99D0C5; color: #fff; font-size: 16px; padding: 12px 24px; margin: 10px; border-radius: 24px; border: none; font-family: 'Poppins', sans-serif;">
+      Confirme sua Presença
+    </button>
+  </a>
 
-      <!-- Botões -->
-      <div style="text-align: center; margin-top: 30px;">
-        <a href="confirmacao.html" style="text-decoration: none;">
-          <button style="background-color: #99D0C5; color: white; font-size: 16px; padding: 12px 24px; margin: 10px; border-radius: 24px; border: none; font-family: 'Poppins', sans-serif;">
-            Confirme sua Presença
-          </button>
-        </a>
+  <a href="presentes.html" style="text-decoration: none;">
+    <button style="background-color: #D4EBF2; color: #333; font-size: 16px; padding: 12px 24px; margin: 10px; border-radius: 24px; border: none; font-family: 'Poppins', sans-serif;">
+      Escolha um Presente
+    </button>
+  </a>
+</div>
 
-        <a href="presentes.html" style="text-decoration: none;">
-          <button style="background-color: #D4EBF2; color: #333; font-size: 16px; padding: 12px 24px; margin: 10px; border-radius: 24px; border: none; font-family: 'Poppins', sans-serif;">
-            Escolha um Presente
-          </button>
-        </a>
-      </div>
-    </section>
   </main>
 
   <footer>
-    <p style="text-align: center; margin-top: 40px; font-family: 'Poppins', sans-serif; font-size: 14px; color: #999;">
-      Com carinho, Armando, Andressa e Catarina 💕
-    </p>
+    <p>Com carinho, Armando, Andressa e Catarina 💕</p>
   </footer>
+
+  <script src="libs/aos/aos.js"></script>
+  <script>
+    AOS.init();
+  </script>
 </body>
 </html>
