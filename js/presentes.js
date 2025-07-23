@@ -1,50 +1,24 @@
-const fraldas = [
-  { tamanho: "RN", total: 10 },
-  { tamanho: "P", total: 15 },
-  { tamanho: "M", total: 30 },
-  { tamanho: "G", total: 40 },
-  { tamanho: "XG", total: 25 }
-];
+const PLANILHA_PRESENTES_URL = "https://script.google.com/macros/s/AKfycbz91MBmfL-xaYaaxnvb8Q7p4JkzV4u_LWKNmTzQVD22O9o8Ir0ExKup-o80rgAmoyqE/exec";
 
 const container = document.getElementById("fraldasContainer");
 const mensagem = document.getElementById("mensagemPresente");
 const form = document.getElementById("formPresentes");
 
-const PLANILHA_PRESENTES_URL = "https://script.google.com/macros/s/AKfycbzpDrUqKrU2KU8JofMb_6cOt-tSdqG4QeB1HlKw8XHmF3BoalOQe9bQtz5SjPKvAEI/exec";
+let estoqueAtual = [];
 
-// Monta a interface do estoque
-fraldas.forEach(fralda => {
-  const bloco = document.createElement("div");
-  bloco.style.marginBottom = "1rem";
-
-  bloco.innerHTML = `
-    <label><strong>${fralda.tamanho}</strong> – até ${fralda.total} pacotes:</label><br/>
-    <input type="number" id="fralda-${fralda.tamanho}" min="0" max="${fralda.total}" value="0" style="width: 80px;" />
-  `;
-
-  container.appendChild(bloco);
-});
-
-let fraldas = [];
-
-const container = document.getElementById("fraldasContainer");
-const mensagem = document.getElementById("mensagemPresente");
-const form = document.getElementById("formPresentes");
-
-const PLANILHA_PRESENTES_URL = "https://script.google.com/macros/s/AKfycbwdKc4VtzRw70nDS-CK36PTGlzEQmdKYnHC7NCFDtfkqc0Sg-rBFVULsVNwam9HOBEF/exec";
-
-// Busca o estoque atualizado do Google Sheets
+// Busca dados do estoque na planilha
 fetch(PLANILHA_PRESENTES_URL)
   .then(res => res.json())
   .then(data => {
-    fraldas = data;
-    renderizaFraldas();
+    estoqueAtual = data;
+    montarFormulario(data);
   })
   .catch(() => {
-    container.innerHTML = "<p>Erro ao carregar estoque de fraldas.</p>";
+    container.innerHTML = "<p>Erro ao carregar os dados de estoque. Tente novamente mais tarde.</p>";
   });
 
-function renderizaFraldas() {
+// Monta a interface do estoque
+function montarFormulario(fraldas) {
   fraldas.forEach(fralda => {
     const bloco = document.createElement("div");
     bloco.style.marginBottom = "1rem";
@@ -58,25 +32,6 @@ function renderizaFraldas() {
   });
 }
 
-const container = document.getElementById("fraldasContainer");
-const mensagem = document.getElementById("mensagemPresente");
-const form = document.getElementById("formPresentes");
-
-const PLANILHA_PRESENTES_URL = "https://script.google.com/macros/s/AKfycbwdKc4VtzRw70nDS-CK36PTGlzEQmdKYnHC7NCFDtfkqc0Sg-rBFVULsVNwam9HOBEF/exec";
-
-// Monta a interface do estoque
-fraldas.forEach(fralda => {
-  const bloco = document.createElement("div");
-  bloco.style.marginBottom = "1rem";
-
-  bloco.innerHTML = `
-    <label><strong>${fralda.tamanho}</strong> – até ${fralda.total} pacotes:</label><br/>
-    <input type="number" id="fralda-${fralda.tamanho}" min="0" max="${fralda.total}" value="0" style="width: 80px;" />
-  `;
-
-  container.appendChild(bloco);
-});
-
 // Envio do formulário
 form.addEventListener("submit", (e) => {
   e.preventDefault();
@@ -84,7 +39,7 @@ form.addEventListener("submit", (e) => {
   const nome = document.getElementById("nome").value.trim();
   if (!nome) return alert("Por favor, preencha seu nome.");
 
-  const fraldasSelecionadas = fraldas.map(fralda => {
+  const fraldasSelecionadas = estoqueAtual.map(fralda => {
     const qtd = parseInt(document.getElementById(`fralda-${fralda.tamanho}`).value || 0);
     return qtd > 0 ? `${qtd}x ${fralda.tamanho}` : null;
   }).filter(Boolean);
@@ -95,20 +50,18 @@ form.addEventListener("submit", (e) => {
 
   const payload = {
     nome,
-    fraldas: fraldasSelecionadas.join(', ')
+    fraldas: fraldasSelecionadas.join(", ")
   };
-
-  const formData = new FormData();
-  formData.append("nome", payload.nome);
-  formData.append("fraldas", payload.fraldas);
 
   fetch(PLANILHA_PRESENTES_URL, {
     method: "POST",
-    body: formData
+    body: JSON.stringify(payload),
+    headers: { "Content-Type": "application/json" }
   })
   .then(() => {
     mensagem.innerHTML = `
-      <p>Agradecemos pelo carinho e pelo presente, caso precise nos pergunte qual tamanho você escolheu 🎁</p>
+      <p>Agradecemos pelo carinho e pelo presente!<br>
+      Caso precise, nos pergunte qual tamanho você escolheu 🎁</p>
     `;
     form.reset();
   })
