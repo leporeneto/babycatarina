@@ -25,6 +25,33 @@ fraldas.forEach(fralda => {
   container.appendChild(bloco);
 });
 
+const fraldas = [
+  { tamanho: "RN", total: 10 },
+  { tamanho: "P", total: 15 },
+  { tamanho: "M", total: 30 },
+  { tamanho: "G", total: 40 },
+  { tamanho: "XG", total: 25 }
+];
+
+const container = document.getElementById("fraldasContainer");
+const mensagem = document.getElementById("mensagemPresente");
+const form = document.getElementById("formPresentes");
+
+const PLANILHA_PRESENTES_URL = "https://script.google.com/macros/s/AKfycbwdKc4VtzRw70nDS-CK36PTGlzEQmdKYnHC7NCFDtfkqc0Sg-rBFVULsVNwam9HOBEF/exec";
+
+// Monta a interface do estoque
+fraldas.forEach(fralda => {
+  const bloco = document.createElement("div");
+  bloco.style.marginBottom = "1rem";
+
+  bloco.innerHTML = `
+    <label><strong>${fralda.tamanho}</strong> – até ${fralda.total} pacotes:</label><br/>
+    <input type="number" id="fralda-${fralda.tamanho}" min="0" max="${fralda.total}" value="0" style="width: 80px;" />
+  `;
+
+  container.appendChild(bloco);
+});
+
 // Envio do formulário
 form.addEventListener("submit", (e) => {
   e.preventDefault();
