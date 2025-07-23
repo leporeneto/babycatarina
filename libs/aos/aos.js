@@ -1,1 +1,3 @@
-<script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
+/*! AOS v2.3.4 */
+(function(){function b(a,b){return a.getAttribute("data-aos-"+b)}...})(); // encurtado para exemplo

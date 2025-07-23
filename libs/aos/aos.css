@@ -1,1 +1,3 @@
-/* AOS Animation CSS */
+
+/*! AOS v2.3.4 */
+[data-aos]{opacity:0;transition-property:opacity,transform;}... /* encurtado para exemplo */
