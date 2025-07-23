@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Escolha um Presente – Chá da Catarina</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Lilita+One&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+</head>
+<body style="background: #fff3e0; font-family: 'Poppins', sans-serif; padding: 2rem;">
+  <h2 style="font-family: 'Lilita One', cursive; text-align: center;">Escolha um Presente</h2>
+  <p style="text-align: center;">Veja os presentes já escolhidos. Caso queira presentear com fraldas, entre em contato com os papais. Obrigado pelo carinho! 💖</p>
+
+  <div id="presentes" style="margin-top: 2rem;"></div>
+
+  <script>
+    const URL_PRESENTES = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQQFVxAkn225VsKhunRWxzZ1JAC9Rmpn4tCWxj-84eHAKLt68f0eS3eQgi-kSojBAjeBlZqR3xR_i3i/pub?gid=0&single=true&output=csv";
+
+    function parseCSV(text) {
+      const [headerLine, ...lines] = text.trim().split("\n");
+      const headers = headerLine.split(",").map(h => h.trim());
+      return lines.map(line => {
+        const values = line.split(",");
+        const obj = {};
+        headers.forEach((h, i) => {
+          obj[h] = values[i];
+        });
+        return obj;
+      });
+    }
+
+    function renderPresentes(data) {
+      const div = document.getElementById("presentes");
+      if (!data.length) return div.innerHTML = "<p>Nenhum presente registrado ainda.</p>";
+
+      let html = "<ul style='list-style: none; padding: 0;'>";
+      data.forEach(item => {
+        html += `<li style="margin-bottom: 1rem; background: white; padding: 1rem; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+          <strong>${item["Nome"]}</strong><br />
+          🎁 ${item["Fraldas"]}
+        </li>`;
+      });
+      html += "</ul>";
+      div.innerHTML = html;
+    }
+
+    fetch(URL_PRESENTES)
+      .then(r => r.text())
+      .then(parseCSV)
+      .then(renderPresentes)
+      .catch(() => {
+        document.getElementById("presentes").innerHTML = "<p>Erro ao carregar dados.</p>";
+      });
+  </script>
+</body>
+</html>
