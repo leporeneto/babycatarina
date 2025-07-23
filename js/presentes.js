@@ -1,24 +1,23 @@
-const PLANILHA_PRESENTES_URL = "https://script.google.com/macros/s/AKfycbz91MBmfL-xaYaaxnvb8Q7p4JkzV4u_LWKNmTzQVD22O9o8Ir0ExKup-o80rgAmoyqE/exec";
+let fraldas = [];
 
 const container = document.getElementById("fraldasContainer");
 const mensagem = document.getElementById("mensagemPresente");
 const form = document.getElementById("formPresentes");
 
-let estoqueAtual = [];
+const PLANILHA_PRESENTES_URL = "https://script.google.com/macros/s/AKfycbz91MBmfL-xaYaaxnvb8Q7p4JkzV4u_LWKNmTzQVD22O9o8Ir0ExKup-o80rgAmoyqE/exec";
 
-// Busca dados do estoque na planilha
+// Busca o estoque atualizado do Google Sheets
 fetch(PLANILHA_PRESENTES_URL)
   .then(res => res.json())
   .then(data => {
-    estoqueAtual = data;
-    montarFormulario(data);
+    fraldas = data;
+    renderizaFraldas();
   })
   .catch(() => {
-    container.innerHTML = "<p>Erro ao carregar os dados de estoque. Tente novamente mais tarde.</p>";
+    container.innerHTML = "<p>Erro ao carregar estoque de fraldas.</p>";
   });
 
-// Monta a interface do estoque
-function montarFormulario(fraldas) {
+function renderizaFraldas() {
   fraldas.forEach(fralda => {
     const bloco = document.createElement("div");
     bloco.style.marginBottom = "1rem";
@@ -39,7 +38,7 @@ form.addEventListener("submit", (e) => {
   const nome = document.getElementById("nome").value.trim();
   if (!nome) return alert("Por favor, preencha seu nome.");
 
-  const fraldasSelecionadas = estoqueAtual.map(fralda => {
+  const fraldasSelecionadas = fraldas.map(fralda => {
     const qtd = parseInt(document.getElementById(`fralda-${fralda.tamanho}`).value || 0);
     return qtd > 0 ? `${qtd}x ${fralda.tamanho}` : null;
   }).filter(Boolean);
@@ -50,20 +49,23 @@ form.addEventListener("submit", (e) => {
 
   const payload = {
     nome,
-    fraldas: fraldasSelecionadas.join(", ")
+    fraldas: fraldasSelecionadas.join(', ')
   };
 
   fetch(PLANILHA_PRESENTES_URL, {
     method: "POST",
     body: JSON.stringify(payload),
-    headers: { "Content-Type": "application/json" }
+    headers: {
+      "Content-Type": "application/json"
+    }
   })
   .then(() => {
     mensagem.innerHTML = `
-      <p>Agradecemos pelo carinho e pelo presente!<br>
-      Caso precise, nos pergunte qual tamanho você escolheu 🎁</p>
+      <p>Agradecemos pelo carinho e pelo presente, caso precise nos pergunte qual tamanho você escolheu 🎁</p>
     `;
     form.reset();
+    container.innerHTML = ""; // limpa o DOM
+    renderizaFraldas(); // recarrega com os estoques atualizados (opcional)
   })
   .catch(() => {
     mensagem.innerHTML = `<p>Houve um erro no envio. Tente novamente mais tarde.</p>`;
