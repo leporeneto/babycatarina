@@ -10,7 +10,7 @@ const container = document.getElementById("fraldasContainer");
 const mensagem = document.getElementById("mensagemPresente");
 const form = document.getElementById("formPresentes");
 
-const PLANILHA_PRESENTES_URL = "https://script.google.com/macros/s/AKfycbxURxZ4M3bVGeaQBxJhvX0NXmM9ZUhpYYdjCcDW-bkbpVa0qD1Zb3RV1GmzPIL2bvYq/exec";
+const PLANILHA_PRESENTES_URL = "https://script.google.com/macros/s/AKfycbwdKc4VtzRw70nDS-CK36PTGlzEQmdKYnHC7NCFDtfkqc0Sg-rBFVULsVNwam9HOBEF/exec";
 
 // Monta a interface do estoque
 fraldas.forEach(fralda => {
