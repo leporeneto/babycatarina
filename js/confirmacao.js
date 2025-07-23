@@ -58,24 +58,27 @@ form.addEventListener('submit', (e) => {
     criancas: criancas.join(', ')
   };
 
-  fetch(PLANILHA_CONFIRMACOES_URL, {
-    method: "POST",
-    body: JSON.stringify(payload),
-    headers: { "Content-Type": "application/json" }
-  })
-  .then(() => {
-    mensagem.innerHTML = `
-      <h3>Obrigada, ${nomePrincipal}! 💖</h3>
-      <p>Sua confirmação foi registrada com sucesso.</p>
-      ${adultos.length ? `<p>👨‍👩‍👧‍👦 Adultos: ${adultos.join(', ')}</p>` : ""}
-      ${criancas.length ? `<p>🧒 Crianças: ${criancas.join(', ')}</p>` : ""}
-      <p>Esperamos vocês dia <strong>16/08/2025 às 12:30h</strong> para celebrar a chegada da nossa princesa Catarina! 👑</p>
-    `;
-    form.reset();
-    adultosContainer.innerHTML = "";
-    criancasContainer.innerHTML = "";
-  })
-  .catch(() => {
-    mensagem.innerHTML = `<p>Ocorreu um erro no envio. Tente novamente mais tarde.</p>`;
-  });
+  const formData = new FormData();
+formData.append("nome", nomePrincipal);
+formData.append("adultos", adultos.join(', '));
+formData.append("criancas", criancas.join(', '));
+
+fetch(PLANILHA_CONFIRMACOES_URL, {
+  method: "POST",
+  body: formData
+})
+.then(() => {
+  mensagem.innerHTML = `
+    <h3>Obrigada, ${nomePrincipal}! 💖</h3>
+    <p>Sua confirmação foi registrada com sucesso.</p>
+    ${adultos.length ? `<p>👨‍👩‍👧‍👦 Adultos: ${adultos.join(', ')}</p>` : ""}
+    ${criancas.length ? `<p>🧒 Crianças: ${criancas.join(', ')}</p>` : ""}
+    <p>Esperamos vocês dia <strong>16/08/2025 às 12:30h</strong> para celebrar a chegada da nossa princesa Catarina! 👑</p>
+  `;
+  form.reset();
+  adultosContainer.innerHTML = "";
+  criancasContainer.innerHTML = "";
+})
+.catch(() => {
+  mensagem.innerHTML = `<p>Ocorreu um erro no envio. Tente novamente mais tarde.</p>`;
 });
