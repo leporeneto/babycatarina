@@ -56,13 +56,7 @@ form.addEventListener("submit", (e) => {
   })
   .then(() => {
     mensagem.innerHTML = `
-      <h3>Obrigado, ${nome}! 🎁</h3>
-      <p>Recebemos sua contribuição com carinho:</p>
-      <ul>
-        ${fraldasSelecionadas.map(f => `<li>${f}</li>`).join("")}
-      </ul>
-      <p>Armando, Andressa e a pequena Catarina agradecem de coração!<br>
-      Te esperamos dia <strong>16/08/2025 às 12:30h</strong> com muito amor 💖</p>
+      <p>Agradecemos pelo carinho e pelo presente, caso precise nos pergunte qual tamanho você escolheu 🎁</p>
     `;
     form.reset();
   })
