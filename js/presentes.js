@@ -64,8 +64,8 @@ form.addEventListener("submit", (e) => {
       <p>Agradecemos pelo carinho e pelo presente, caso precise nos pergunte qual tamanho você escolheu 🎁</p>
     `;
     form.reset();
-    container.innerHTML = ""; // limpa o DOM
-    renderizaFraldas(); // recarrega com os estoques atualizados (opcional)
+    container.innerHTML = "";
+    renderizaFraldas();
   })
   .catch(() => {
     mensagem.innerHTML = `<p>Houve um erro no envio. Tente novamente mais tarde.</p>`;
