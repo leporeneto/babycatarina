@@ -10,7 +10,7 @@ const container = document.getElementById("fraldasContainer");
 const mensagem = document.getElementById("mensagemPresente");
 const form = document.getElementById("formPresentes");
 
-const PLANILHA_PRESENTES_URL = "https://script.google.com/macros/s/AKfycbwdKc4VtzRw70nDS-CK36PTGlzEQmdKYnHC7NCFDtfkqc0Sg-rBFVULsVNwam9HOBEF/exec";
+const PLANILHA_PRESENTES_URL = "https://script.google.com/macros/s/AKfycbzpDrUqKrU2KU8JofMb_6cOt-tSdqG4QeB1HlKw8XHmF3BoalOQe9bQtz5SjPKvAEI/exec";
 
 // Monta a interface do estoque
 fraldas.forEach(fralda => {
@@ -25,13 +25,38 @@ fraldas.forEach(fralda => {
   container.appendChild(bloco);
 });
 
-const fraldas = [
-  { tamanho: "RN", total: 10 },
-  { tamanho: "P", total: 15 },
-  { tamanho: "M", total: 30 },
-  { tamanho: "G", total: 40 },
-  { tamanho: "XG", total: 25 }
-];
+let fraldas = [];
+
+const container = document.getElementById("fraldasContainer");
+const mensagem = document.getElementById("mensagemPresente");
+const form = document.getElementById("formPresentes");
+
+const PLANILHA_PRESENTES_URL = "https://script.google.com/macros/s/AKfycbwdKc4VtzRw70nDS-CK36PTGlzEQmdKYnHC7NCFDtfkqc0Sg-rBFVULsVNwam9HOBEF/exec";
+
+// Busca o estoque atualizado do Google Sheets
+fetch(PLANILHA_PRESENTES_URL)
+  .then(res => res.json())
+  .then(data => {
+    fraldas = data;
+    renderizaFraldas();
+  })
+  .catch(() => {
+    container.innerHTML = "<p>Erro ao carregar estoque de fraldas.</p>";
+  });
+
+function renderizaFraldas() {
+  fraldas.forEach(fralda => {
+    const bloco = document.createElement("div");
+    bloco.style.marginBottom = "1rem";
+
+    bloco.innerHTML = `
+      <label><strong>${fralda.tamanho}</strong> – até ${fralda.disponivel} pacotes:</label><br/>
+      <input type="number" id="fralda-${fralda.tamanho}" min="0" max="${fralda.disponivel}" value="0" style="width: 80px;" />
+    `;
+
+    container.appendChild(bloco);
+  });
+}
 
 const container = document.getElementById("fraldasContainer");
 const mensagem = document.getElementById("mensagemPresente");
