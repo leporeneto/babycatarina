@@ -4,7 +4,7 @@ const criancasContainer = document.getElementById('criancasContainer');
 const mensagem = document.getElementById('mensagemConfirmacao');
 
 // URLs do seu Web App (já integradas)
-const PLANILHA_CONFIRMACOES_URL = "https://script.google.com/macros/s/AKfycbxuq_nUdg0jERnNQhl-QVnsnEXgOtFaxZA6kmjgCmgRZdqC6TTUX_sIuJlcheNRuI5D/exec";
+const PLANILHA_CONFIRMACOES_URL = "https://script.google.com/macros/s/AKfycbykNgSj9FTxkkq9UDRCtgbzD9gOQtZ5ecA3bxEfV-jZANcl7pB_XsZNR8euDU_EQlru/exec";
 
 // Adicionar campos de adulto
 function adicionarAdulto() {
