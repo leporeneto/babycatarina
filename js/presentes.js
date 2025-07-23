@@ -1,9 +1,9 @@
 const fraldas = [
-  { tamanho: "RN", total: 8 },
-  { tamanho: "P", total: 11 },
-  { tamanho: "M", total: 23 },
-  { tamanho: "G", total: 30 },
-  { tamanho: "XG", total: 18 }
+  { tamanho: "RN", total: 10 },
+  { tamanho: "P", total: 15 },
+  { tamanho: "M", total: 30 },
+  { tamanho: "G", total: 40 },
+  { tamanho: "XG", total: 25 }
 ];
 
 const container = document.getElementById("fraldasContainer");
